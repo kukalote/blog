@@ -155,4 +155,20 @@ class ModelMakeCommand extends GeneratorCommand
             ['resource', 'r', InputOption::VALUE_NONE, 'Indicates if the generated controller should be a resource controller.'],
         ];
     }
+
+    /**
+     *  实体生成命令:
+     *  > php artisan make:model Master
+     */
+    protected function rootNamespace()
+    {
+        return $this->laravel->getNamespace().'Entity/';
+    }
+
+    protected function getPath($name)
+    {
+        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+
+        return $this->laravel['path'].'/Entity/'.str_replace('\\', '/', $name).'.php';
+    }
 }
