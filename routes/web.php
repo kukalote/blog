@@ -11,43 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    $item_list = [
-        [
-            'item_name' => '一级菜单',
-            'item_list' => [
-                [
-                    'item_name' => '二级菜单',
-                ],
-                [
-                    'item_name' => '二级菜单2',
-                    'item_list' => [
-                        [
-                            'item_name' => '三级菜单1',
-                        ],
-                    ],
-                ],
-            ],
-        ],
-        [
-            'item_name' => '一级菜单',
-            'item_list' => [
-                [
-                    'item_name' => '二级菜单',
-                ],
-                [
-                    'item_name' => '二级菜单2',
-                    'item_list' => [
-                        [
-                            'item_name' => '三级菜单1',
-                        ],
-                    ],
-                ],
-            ],
-        ],
-    ];
-//    return view('alert');
-//    return view('child', ['title'=>'xxxxxxxxxxxtitlexxxxxxxxxx']);
-    return view('index', ['item_list'=>$item_list]);
-//    return view('welcome');
-});
+//Route::get('/', '');
+Route::middleware('checklogin')->get('/auth/login', 'Auth\LoginController@login');
+Route::get('/test/runinsert', 'TestController@anyruninsert');
+//Route::middleware('checklogin')->get('/', 'Auth\LoginController@login');
