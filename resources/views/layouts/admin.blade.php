@@ -1,6 +1,6 @@
 
 @section('title', '管理后台')
-@section('logo', 'assets/img/favicon.png')
+@section('logo', url('assets/img/favicon.png'))
 @section('description', '管理后台描述')
 
 @section('page_head')
@@ -19,20 +19,20 @@
         <link rel="shortcut icon" href="@yield('logo')" type="image/x-icon">
 
         <!--Basic Styles-->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="{{url('assets/css/bootstrap.min.css')}}" rel="stylesheet" />
         <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
-        <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
+        <link href="{{url('assets/css/font-awesome.min.css')}}" rel="stylesheet" />
+        <link href="{{url('assets/css/weather-icons.min.css')}}" rel="stylesheet" />
 
         <!--Beyond styles-->
-        <link id="beyond-link" href="assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/demo.min.css" rel="stylesheet" />
-        <link href="assets/css/typicons.min.css" rel="stylesheet" />
-        <link href="assets/css/animate.min.css" rel="stylesheet" />
+        <link id="beyond-link" href="{{url('assets/css/beyond.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{url('assets/css/demo.min.css')}}" rel="stylesheet" />
+        <link href="{{url('assets/css/typicons.min.css')}}" rel="stylesheet" />
+        <link href="{{url('assets/css/animate.min.css')}}" rel="stylesheet" />
         <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
         <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-        <script src="assets/js/skins.min.js"></script>
+        <script src="{{url('assets/js/skins.min.js'}}"></script>
 
     </head>
     <body>
