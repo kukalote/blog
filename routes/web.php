@@ -12,6 +12,20 @@
 */
 
 //Route::get('/', '');
-Route::middleware('checklogin')->get('/auth/login', 'Auth\LoginController@login');
-Route::get('/test/runinsert', 'TestController@anyruninsert');
+//Route::middleware('checklogin')->get('/auth/login', 'Auth\LoginController@login');
+//Route::get('/test/runinsert', 'TestController@anyruninsert');
 //Route::middleware('checklogin')->get('/', 'Auth\LoginController@login');
+
+
+// auth 生成配置 
+// vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php
+// vendor/laravel/framework/src/Illuminate/Routing/Router.php
+Auth::routes();
+
+// 首页
+Route::get('/', function(){
+    return view('welcome');
+});
+
+// 后面页面 
+Route::get('/home', 'HomeController@index')->name('home');
