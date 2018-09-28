@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -34,12 +35,23 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout');
+        // I36N 翻译
+//        $locale = \App::getLocale();
+        $locale = 'zh';
+        \App::setLocale($locale);
     }
 
-    public function login()
-    {
-        return view( 'admin.loginbak' );
-//        return view( 'admin.login' );
-    }
+//    public function login( Request $request )
+//    {
+//        $email    = $request->input('email');
+//        $password = $request->input('password');
+//
+//        // 判断用户是否合法
+//
+//        // email
+//        // password
+//        return view( 'auth.login' );
+//    }
+
 }

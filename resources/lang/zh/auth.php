@@ -13,16 +13,17 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'forget' => 'Forgot Your Password?',
+    'failed' => '登陆失败',
+    'throttle' => '登陆次数过多，:seconds 秒后再试',
+    'forget' => '忘记密码',
 
     // 按钮用
-    'login' => 'Login',
-    'logout' => 'Logout',
-    'register' => 'Register',
-    'remember' => 'Remember Me',
-    'password' => 'Password',
-    'email_addr' => 'E-Mail Address',
+    'login' => '登陆',
+    'logout' => '退出',
+    'register' => '注册',
+    'remember' => '记住密码',
+    'password' => '密码',
+    'email_addr' => '邮件地址'
+
 
 ];

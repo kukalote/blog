@@ -32,7 +32,7 @@
         <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
         <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-        <script src="{{url('assets/js/skins.min.js'}}"></script>
+        <script src="{{url('assets/js/skins.min.js')}}"></script>
 
     </head>
     <body>

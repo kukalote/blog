@@ -19,10 +19,10 @@ return [
 
     // 按钮用
     'login' => 'Login',
-    'logout' => 'Logout',
-    'register' => 'Register',
     'remember' => 'Remember Me',
     'password' => 'Password',
     'email_addr' => 'E-Mail Address',
+
+
 
 ];
