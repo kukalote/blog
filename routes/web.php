@@ -29,3 +29,6 @@ Route::get('/', function(){
 
 // 后面页面 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//redis测试
+Route::get('testRedis','RedisController@testRedis')->name('testRedis');
