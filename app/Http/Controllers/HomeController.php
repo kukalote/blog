@@ -21,10 +21,53 @@ class HomeController extends CommonController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $item_list = [['item_name'=>'item_name', 'url'=>''], ['item_name'=>'item_name', 'url'=>'', 'item_list'=>[['item_name'=>'sub_item', 'url'=>'']]]];
-        return view('index', ['item_list'=>$item_list]);
-//        return view('home');
+        $view_data = new ViewData($this);
+//        dd($view_data->_user_info);
+//        $data = ['user_info'=>$this->_user_info, 'item_list'=>$this->_item_info];
+        return view('index', ['view_data'=>$view_data]);
+    }
+//    public function index(Request $request)
+//    {
+////        $data = ['user_info'=>$this->_user_info, 'item_list'=>$this->_item_info];
+//        $data = ['user_info'=>$this->_user_info];
+//        view('index', $data);
+//        $data['item_list'] = $this->_item_info;
+//        return view('index', $data);
+////        return view('home');
+//    }
+}
+
+class ViewData 
+{
+    private $_vars = [];
+    private $_obj = null;
+    public function __construct($obj) 
+    {
+        $this->_obj = $obj;
+    }
+    public function __get($name)
+    {
+        return $this->_getVar($name);
+    }
+    public function __isset($name)
+    {
+        return $this->_getVar($name);
+    }
+    private function _getVar($name)
+    {
+        if (key_exists($name, $this->_vars)) {
+            return $this->_vars[$name];
+        }
+        try {
+            $vars = $this->_obj->$name;
+        } catch (\Exception $e) {
+            $vars = null;
+        }
+        if (!empty($vars)) {
+            $this->_vars[$name] = $vars;
+        }
+        return $vars;
     }
 }

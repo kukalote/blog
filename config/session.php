@@ -16,7 +16,8 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+#    'driver' => env('SESSION_DRIVER', 'file'), // todo
+    'driver' => env('SESSION_DRIVER', 'redis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +71,8 @@ return [
     |
     */
 
-    'connection' => null,
+#    'connection' => null, // todo
+    'connection' => 'default',
 
     /*
     |--------------------------------------------------------------------------
