@@ -297,6 +297,7 @@ class ClassLoader
      */
     public function loadClass($class)
     {
+        // autoload class @todo
         if ($file = $this->findFile($class)) {
             includeFile($file);
 

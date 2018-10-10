@@ -85,6 +85,7 @@ abstract class Connection
     }
 
     /**
+     * @todo redis command 公用命令
      * Run a command against the Redis database.
      *
      * @param  string  $method

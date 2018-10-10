@@ -116,7 +116,7 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        // todo 登陆成功调用
     }
 
     /**

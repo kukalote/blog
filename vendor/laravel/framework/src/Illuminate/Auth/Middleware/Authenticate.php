@@ -54,7 +54,6 @@ class Authenticate
     protected function authenticate(array $guards)
     {
         if (empty($guards)) {
-            dd($this->auth);
             return $this->auth->authenticate();
         }
 

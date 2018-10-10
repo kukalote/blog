@@ -821,7 +821,6 @@ class Builder
         if (! $this->model->usesTimestamps()) {
             return $values;
         }
-
         return Arr::add(
             $values, $this->model->getUpdatedAtColumn(),
             $this->model->freshTimestampString()
