@@ -14,6 +14,10 @@
 //Route::get('/', '');
 //Route::middleware('checklogin')->get('/auth/login', 'Auth\LoginController@login');
 //Route::get('/test/runinsert', 'TestController@anyruninsert');
+Route::get('/makecity', 'TestController@anyMakecity');
+Route::get('/makeweather', 'TestController@anyMakecityWeather');
+Route::get('/makeposition', 'TestController@anyMakeCityPosition2');
+
 //Route::middleware('checklogin')->get('/', 'Auth\LoginController@login');
 
 
