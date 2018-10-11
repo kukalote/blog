@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * Request represents an HTTP request.
+ * @todo Request represents an HTTP request.
  *
  * The methods dealing with URL accept / return a raw path (% encoded):
  *   * getBasePath

@@ -11,9 +11,9 @@ class HomeController extends CommonController
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
     }
 
     /**
@@ -23,51 +23,9 @@ class HomeController extends CommonController
      */
     public function index(Request $request)
     {
-        $view_data = new ViewData($this);
-//        dd($view_data->_user_info);
-//        $data = ['user_info'=>$this->_user_info, 'item_list'=>$this->_item_info];
-        return view('index', ['view_data'=>$view_data]);
+        return view('index', ['view_data'=>$this->_view_data]);
+        return view('home');
     }
-//    public function index(Request $request)
-//    {
-////        $data = ['user_info'=>$this->_user_info, 'item_list'=>$this->_item_info];
-//        $data = ['user_info'=>$this->_user_info];
-//        view('index', $data);
-//        $data['item_list'] = $this->_item_info;
-//        return view('index', $data);
-////        return view('home');
-//    }
 }
 
-class ViewData 
-{
-    private $_vars = [];
-    private $_obj = null;
-    public function __construct($obj) 
-    {
-        $this->_obj = $obj;
-    }
-    public function __get($name)
-    {
-        return $this->_getVar($name);
-    }
-    public function __isset($name)
-    {
-        return $this->_getVar($name);
-    }
-    private function _getVar($name)
-    {
-        if (key_exists($name, $this->_vars)) {
-            return $this->_vars[$name];
-        }
-        try {
-            $vars = $this->_obj->$name;
-        } catch (\Exception $e) {
-            $vars = null;
-        }
-        if (!empty($vars)) {
-            $this->_vars[$name] = $vars;
-        }
-        return $vars;
-    }
-}
+

@@ -30,4 +30,12 @@ return [
 
     'compiled' => realpath(storage_path('framework/views')),
 
+    /**
+     * 
+     *  列表页显示参数
+     */ 
+    // 列表默认起始页
+    'page' => 1,
+    // 每页显示条数
+    'per_page' => 15,
 ];

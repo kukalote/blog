@@ -1,3 +1,8 @@
+@section('title', 'Error 404 - Page Not Found')
+@section('logo', url('assets/img/favicon.png'))
+@section('description', 'Error 404 - Page Not Found')
+
+
 <!DOCTYPE html>
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6

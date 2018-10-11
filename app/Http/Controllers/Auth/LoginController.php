@@ -19,6 +19,7 @@ class LoginController extends Controller
     |
     */
 
+    // vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php
     use AuthenticatesUsers;
 
     /**
