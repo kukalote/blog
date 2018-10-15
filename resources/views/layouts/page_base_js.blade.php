@@ -8,4 +8,6 @@
     <script src="{{url('/assets/js/beyond.min.js')}}"></script>
 
     <!--Page Related Scripts-->
-    <script src="assets/js/validation/bootstrapvalidator.js"></script>
+    <script src="{{url('/assets/js/validation/bootstrapvalidator.js')}}"></script>
+    <script src="{{url('/assets/js/notify/bootstrap-notify.js')}}"></script>
+

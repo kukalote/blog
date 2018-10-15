@@ -59,10 +59,12 @@ class Tools
      * 通过匿名方法生成数据
      * 并 get, hget 返回数据
      */
-    public static function getRedisVars($redis_key, $func, $redis_column='')
+    public static function getRedisVars($redis_key, $func, $redis_column=null)
     {
-        if (empty($redis_column)) {
+        if (is_null($redis_column)) {
             $redis_val = Redis::get($redis_key);
+        } elseif ($redis_column=='*') {
+            $redis_val = Redis::hgetall($redis_key);
         } else {
             $redis_val = Redis::hget($redis_key, $redis_column);
         }

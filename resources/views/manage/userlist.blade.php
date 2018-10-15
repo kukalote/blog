@@ -38,111 +38,140 @@
                 <!-- /Page Header -->
                 <!-- Page Body -->
                 <div class="page-body">
-
                     <div class="row">
-            <!-- 天气 start -->
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
-                            <div class="databox databox-vertical databox-xxxlg radius-bordered databox-shadowed">
-                                <div class="databox-top bg-orange text-align-left padding-left-30">
-                                    <span class="databox-header"><i class="glyphicon glyphicon-map-marker"></i> NEW YORK CITY</span>
+                        <div class="col-xs-12 col-md-12">
+                            <div class="widget">
+                                <div class="widget-header  with-footer">
+                                    <span class="widget-caption">Responsive Flip Scroll Tables</span>
+                                    <div class="widget-buttons">
+                                        <a href="#" data-toggle="maximize">
+                                            <i class="fa fa-expand"></i>
+                                        </a>
+<!--
+                                        <a href="#" data-toggle="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+-->
+<!--
+                                        <a href="#" data-toggle="dispose">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+-->
+                                    </div>
                                 </div>
-                                <div class="databox-bottom no-padding bg-sky">
-                                    <div class="databox-row row-4 bg-yellow padding-30 text-align-left">
-                                        <span class="databox-text padding-bottom-5" style="font-size:20px;">FRI 29/09</span>
-                                        <span class="databox-number" style="font-size:44px;">14° <i class="wi wi-day-cloudy"></i></span>
+                                <div class="widget-body">
+                                    <div class="flip-scroll">
+                                        <table class="table table-bordered table-striped table-condensed flip-content">
+                                            <thead class="flip-content bordered-palegreen">
+                                                <tr>
+                                                    <th>
+                                                        ID
+                                                    </th>
+                                                    <th>
+                                                        用户名 
+                                                    </th>
+                                                    <th class="numeric">
+                                                        邮箱
+                                                    </th>
+                                                    <th class="numeric">
+                                                        城市
+                                                    </th>
+                                                    <th class="numeric">
+                                                        操作
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($users->items() as $user)
+                                                <tr>
+                                                    <td>
+                                                        {{$user->id}}
+                                                    </td>
+                                                    <td>
+                                                        {{$user->name}}
+                                                    </td>
+                                                    <td class="numeric">
+                                                        {{$user->email}}
+                                                    </td>
+                                                    <td>
+                                                        {{isset($view_data->_citys[$user->city_id]) ? ($view_data->_citys[$user->city_id]['city_name']) : ''}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#editModal"><i class="fa fa-edit"></i> Edit</a>
+                                                        <a href="#" class="btn btn-danger btn-xs delete" data-id="{{$user->id}}" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash-o"></i> Delete</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">SAT</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">18°  <i class="wi wi-day-cloudy"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">SUN</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">25°  <i class="wi wi-cloudy-gusts"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">MON</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">22°  <i class="wi wi-windy"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">TUE</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">19°  <i class="wi wi-day-showers"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">WED</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">16°  <i class="wi wi-day-fog"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">THU</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">14°  <i class="wi wi-day-lightning"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">FRI</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">11°  <i class="wi wi-day-rain-mix"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="databox-row row-1 padding-5 padding-left-30 text-align-left">
-                                        <div class="databox-cell cell-8">
-                                            <span class="databox-title no-margin">SAT</span>
-                                        </div>
-                                        <div class="databox-cell cell-4">
-                                            <span class="databox-number">29°  <i class="wi wi-day-hail"></i></span>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
-            <!-- 天气 end -->
-
-            <!-- 日期 start -->
-                        <div class="col-lg-3 col-sm-6 col-xs-12">
-                            <div class="databox radius-bordered databox-shadowed databox-graded databox-vertical">
-                                <div class="databox-top bg-blue">
-                                    <div class="databox-icon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </div>
-                                </div>
-                                <div class="databox-bottom text-align-center">
-                                    <span class="databox-text">{{date('l - Y d F')}}</span>
-                                    <span class="databox-text">{{date('h:i A')}}</span>
-                                </div>
-                            </div>
-                        </div>
-            <!-- 日期 end -->
                     </div>
+{{$users->render()}}
                 </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
+
+<!-- 删除提示模态框（Modal） -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p>确定删除操作么?</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" value="" name="delete_id" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary submit">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 @endsection
+
+
+
 @section('self_js')
     <!-- self_js start -->
+<script>
+var url = {
+    "delete":"",
+    "edit":""
+};
+// 模拟框自定义事件
+$('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var node = $(this).find("input[name='delete_id']").val(button.data('id'));
+})
+// 删除操作
+$('#deleteModal button.submit').click(function(){
+    var deleted_id = $("#deleteModal input").val();
+
+    $('#deleteModal').modal('hide')
+
+});
+
+// 执行删除
+function ajaxDelete(id) {
+    
+}
+/*
+$.notify("Hello World");
+ */
+ $.notify("Enter: Flip In on Y AxisExit: Flip Out on X Axis", {
+	animate: {
+		enter: 'animated flipInY',
+		exit: 'animated flipOutX'
+	}
+});   
+</script>
     <!-- self_js end -->
 @endsection

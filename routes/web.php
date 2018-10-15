@@ -11,6 +11,11 @@
 |
 */
 
+// 模板测试 
+
+Route::get('/child', function(){
+    return view('child');
+});
 //Route::get('/', '');
 //Route::middleware('checklogin')->get('/auth/login', 'Auth\LoginController@login');
 //Route::get('/test/runinsert', 'TestController@anyruninsert');

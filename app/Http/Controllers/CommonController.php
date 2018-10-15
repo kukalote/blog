@@ -12,6 +12,8 @@ class CommonController extends Controller
 {
     const WIDGET_WEATHER_CACHE = 'wwc'; // 挂件-天气缓存
 
+    const LIBRARY_CITY_CACHE = 'lcc';   // 数据库-城市缓存
+
     private $_data = array();
 
     /**
@@ -118,6 +120,26 @@ class CommonController extends Controller
             'description' => '管理后台描述',
             'logo' => url('/assets/img/favicon.png'),
         ];
+    }
+
+    /**
+     * 获取城市信息
+     */
+    protected function getCitys()
+    {
+        $redis_key = self::LIBRARY_CITY_CACHE;
+        $citys = Tools::getRedisVars($redis_key, function(){
+            $citys = City::get()->toArray();
+            $citys = array_column($citys, NULL, 'city_id');
+            $citys = array_map(function($val){
+                return json_encode($val);
+            }, $citys);
+            return $citys;
+        }, '*');
+        $citys = array_map(function($val){
+            return json_decode($val, true);
+        }, $citys);
+        return $citys;
     }
 
 
