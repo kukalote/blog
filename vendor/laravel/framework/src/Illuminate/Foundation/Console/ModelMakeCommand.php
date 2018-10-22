@@ -157,12 +157,12 @@ class ModelMakeCommand extends GeneratorCommand
     }
 
     /**
-     *  实体生成命令:
+     *  @self_tip 实体生成命令:
      *  > php artisan make:model Master
      */
     protected function rootNamespace()
     {
-        return $this->laravel->getNamespace().'Entity/';
+        return $this->laravel->getNamespace().'Entity';
     }
 
     protected function getPath($name)
