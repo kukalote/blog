@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Entity\Result;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +15,12 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+//        \Illuminate\Auth\AuthenticationException::class,
+//        \Illuminate\Auth\Access\AuthorizationException::class,
+//        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+//        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+//        \Illuminate\Session\TokenMismatchException::class,
+//        \Illuminate\Validation\ValidationException::class,
     ];
 
     /**
@@ -46,6 +53,31 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $result = new Result();
+        if ($exception instanceof CustomException) {
+            return response()->view('errors.custom', $request, 503);
+//            return $exception->render($request);
+        }
+        if ($exception instanceof CustomJsonException) {
+            return $exception->render($request, $exception);
+        }
+
+        // 参数验证处理
+        if ($exception instanceof ValidationException) {
+            $errors = $exception->errors();
+            while (1) {
+                if (!is_string($errors)) {
+                    $errors = current($errors);
+                }
+                break;
+            }
+            $error = implode($errors);
+            $result->setMsg($error);
+            return response()->json($result->toArray());
+//            return response()->view('errors.custom', $request, 503);
+//            return $exception->errors();
+        }
+
         return parent::render($request, $exception);
     }
 }
