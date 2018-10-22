@@ -58,6 +58,7 @@ class Tools
      * 支持 set, hset, hmset 命令保存数据
      * 通过匿名方法生成数据
      * 并 get, hget 返回数据
+     * @param   mix     $redis_column [null, '*', string]
      */
     public static function getRedisVars($redis_key, $func, $redis_column=null)
     {

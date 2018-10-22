@@ -10,4 +10,5 @@
     <!--Page Related Scripts-->
     <script src="{{url('/assets/js/validation/bootstrapvalidator.js')}}"></script>
     <script src="{{url('/assets/js/notify/bootstrap-notify.js')}}"></script>
+    <script src="{{url('/assets/js/common/form.js')}}"></script>
 

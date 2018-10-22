@@ -1,7 +1,7 @@
 <?php
 /**
- * 管理-用户逻辑
- * date: 2018-10-11
+ * 管理-菜单逻辑
+ * date: 2018-10-19 
  */
 namespace App\Service\Manage;
 
@@ -10,13 +10,11 @@ use App\Entity\Result;
 use App\Entity\User;
 use App\Service\BaseService;
 use App\Exceptions\CustomJsonException;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Hash;
 
 
-class UserService extends BaseService
+class MenuService extends BaseService
 {
-    public function getUserList()
+    public function getMenuList()
     {
         $users = User::paginate(config('view.per_page'));
         return $users;

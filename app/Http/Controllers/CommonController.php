@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Library\Tools;
 use App\Entity\City;
+use App\Entity\Result;
 
 class CommonController extends Controller
 {
     const WIDGET_WEATHER_CACHE = 'wwc'; // 挂件-天气缓存
 
     const LIBRARY_CITY_CACHE = 'lcc';   // 数据库-城市缓存
+    const LIBRARY_RELATE_CITY_CACHE = 'lrcc';   // 数据库-城市关系及缓存
 
     private $_data = array();
 
@@ -75,9 +77,15 @@ class CommonController extends Controller
                     'url'=>'',
                     'item_list'=> [
                         [
-                            'key' => 'userlist',
+                            'key' => 'user',
                             'item_name'=>'用户列表',
-                            'url'=>url('manage/userlist'),
+                            'url'=>url('manage/user/list'),
+                            'item_list'=> [],
+                        ],
+                        [
+                            'key' => 'menu',
+                            'item_name'=>'菜单管理',
+                            'url'=>url('manage/menu/list'),
                             'item_list'=> [],
                         ],
                     ],
@@ -128,6 +136,26 @@ class CommonController extends Controller
     protected function getCitys()
     {
         $redis_key = self::LIBRARY_CITY_CACHE;
+        $citys = Tools::getRedisVars($redis_key, function(){
+            $citys = City::where('depth', 2)->get()->toArray();
+            $citys = array_column($citys, NULL, 'city_id');
+            $citys = array_map(function($val){
+                return json_encode($val);
+            }, $citys);
+            return $citys;
+        }, '*');
+        $citys = array_map(function($val){
+            return json_decode($val, true);
+        }, $citys);
+        return $citys;
+    }
+
+    /**
+     * 获取城市关系及信息 @todo
+     */
+    protected function getRelateCitys()
+    {
+        $redis_key = self::LIBRARY_RELATE_CITY_CACHE;
         $citys = Tools::getRedisVars($redis_key, function(){
             $citys = City::get()->toArray();
             $citys = array_column($citys, NULL, 'city_id');

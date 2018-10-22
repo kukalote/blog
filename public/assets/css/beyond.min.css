@@ -5231,7 +5231,7 @@ a:focus,a:active {
 .databox .chart {
 	font-size: 13px
 }
-
+/**
 .alert {
 	margin-bottom: 20px;
 	margin-top: 0;
@@ -5288,6 +5288,7 @@ a:focus,a:active {
 	border-color: #11a9cc;
 	background: #57b5e3
 }
+*/
 
 .tab-content {
 	background-color: #fbfbfb;
@@ -11002,7 +11003,7 @@ label {
 	font-size: 13px;
 	vertical-align: middle
 }
-
+/*
 textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"] {
 	-webkit-border-radius: 0 !important;
 	-webkit-background-clip: padding-box !important;
@@ -11022,6 +11023,7 @@ textarea,input[type="text"],input[type="password"],input[type="datetime"],input[
 	-moz-box-shadow: none;
 	box-shadow: none
 }
+*/
 
 textarea:hover,input[type="text"]:hover,input[type="password"]:hover,input[type="datetime"]:hover,input[type="datetime-local"]:hover,input[type="date"]:hover,input[type="month"]:hover,input[type="time"]:hover,input[type="week"]:hover,input[type="number"]:hover,input[type="email"]:hover,input[type="url"]:hover,input[type="search"]:hover,input[type="tel"]:hover,input[type="color"]:hover {
 	border-color: rgba(0,0,0,.2)
@@ -13265,6 +13267,7 @@ input[type=checkbox].checkbox-slider.colored-maroon.toggle~.text:after {
 	padding-left: 35px !important
 }
 
+/*
 .select2-container {
 	font-size: 13px;
 	box-sizing: border-box;
@@ -13671,6 +13674,7 @@ input[type=checkbox].checkbox-slider.colored-maroon.toggle~.text:after {
 	margin-left: -5em;
 	padding-left: 6em
 }
+*/
 
 .bootstrap-tagsinput {
 	display: block;

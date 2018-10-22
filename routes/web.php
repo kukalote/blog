@@ -23,6 +23,9 @@ Route::get('/makecity', 'TestController@anyMakecity');
 Route::get('/makeweather', 'TestController@anyMakecityWeather');
 Route::get('/makeposition', 'TestController@anyMakeCityPosition2');
 
+//redis测试
+Route::get('testRedis','RedisController@testRedis')->name('testRedis');
+
 //Route::middleware('checklogin')->get('/', 'Auth\LoginController@login');
 
 
@@ -40,7 +43,16 @@ Route::get('/', function(){
 Route::get('home', 'HomeController@index')->name('home');
 
 // 后台管理
-Route::get('/manage/userlist', 'Manage\UserController@userlist')->name('userlist');
+// 用户操作
+Route::get('/manage/user/list', 'Manage\UserController@getuserlist')->name('getuserlist');
+Route::post('/manage/user/create', 'Manage\UserController@createuser')->name('createuser');
+Route::post('/manage/user/delete', 'Manage\UserController@deleteuser')->name('deleteuser');
+Route::post('/manage/user/edit', 'Manage\UserController@edituser')->name('edituser');
 
-//redis测试
-Route::get('testRedis','RedisController@testRedis')->name('testRedis');
+// 栏目管理
+Route::get('/manage/menu/list', 'Manage\MenuController@getmenulist')->name('getmenulist');
+Route::get('/manage/menu/add', 'Manage\MenuController@addmenu')->name('addmenu');
+Route::get('/manage/menu/delete', 'Manage\MenuController@deletemenu')->name('deletemenu');
+Route::get('/manage/menu/modify', 'Manage\MenuController@modifymenu')->name('modifymenu');
+
+
