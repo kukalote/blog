@@ -51,8 +51,9 @@ Route::post('/manage/user/edit', 'Manage\UserController@edituser')->name('editus
 
 // 栏目管理
 Route::get('/manage/menu/list', 'Manage\MenuController@getmenulist')->name('getmenulist');
-Route::get('/manage/menu/add', 'Manage\MenuController@addmenu')->name('addmenu');
-Route::get('/manage/menu/delete', 'Manage\MenuController@deletemenu')->name('deletemenu');
-Route::get('/manage/menu/modify', 'Manage\MenuController@modifymenu')->name('modifymenu');
+Route::post('/manage/menu/tree', 'Manage\MenuController@getmenutree')->name('getmenutree');
+Route::post('/manage/menu/create', 'Manage\MenuController@createmenu')->name('createmenu');
+Route::post('/manage/menu/delete', 'Manage\MenuController@deletemenu')->name('deletemenu');
+Route::post('/manage/menu/modify', 'Manage\MenuController@modifymenu')->name('modifymenu');
 
 

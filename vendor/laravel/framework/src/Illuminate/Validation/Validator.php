@@ -264,6 +264,21 @@ class Validator implements ValidatorContract
         foreach ($this->rules as $attribute => $rules) {
             $attribute = str_replace('\.', '->', $attribute);
 
+            // 支持 default 属性-start // --todo--
+            $value = $this->getValue($attribute);
+            $default_val = null;
+            $rules = array_map(function($val) use (&$default_val) {
+                if (strpos($val, 'default') !==false) {
+                    $default = explode(':', $val);
+                    if (count($default)==2) {
+                        $default_val = $default[1];
+                        return null;
+                    }
+                }
+                return $val;
+            }, $rules);
+            $this->data[$attribute] = empty($value)?$default_val:$value;
+            // 支持 default 属性-end
             foreach ($rules as $rule) {
                 $this->validateAttribute($attribute, $rule);
 

@@ -3,78 +3,115 @@
  * 管理-菜单逻辑
  * date: 2018-10-19 
  */
-namespace App\Service\Manage;
+namespace App\Http\Controllers\Manage;
 
-use App\Entity\City;
+use App\Http\Controllers\CommonController;
+use App\Service\Manage\MenuService;
 use App\Entity\Result;
-use App\Entity\User;
-use App\Service\BaseService;
-use App\Exceptions\CustomJsonException;
+use Exception;
+//use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Validator;
 
-
-class MenuService extends BaseService
+class MenuController extends CommonController
 {
-    public function getMenuList()
-    {
-        $users = User::paginate(config('view.per_page'));
-        return $users;
-    }
-
     /**
-     * create user
-     */
-    public function createUser($data)
-    {
-        $result = new Result();
-        $user = $this->create($data);
-        if ($user) {
-            $result->setCode(Result::CODE_SUCCESS)->setMsg('操作成功');
-        } else {
-            $result->setCode(Result::CODE_ERROR)->setMsg('操作失败');
-        }
-        return $result;
-    }
-    /**
-     * delete the target user by id
-     */
-    public function deleteUser($uid)
-    {
-        $result = new Result();
-        $effect_rows = User::where('id', $uid)->delete();
-        if ($effect_rows) {
-            $result->setCode(Result::CODE_SUCCESS)->setMsg('操作成功');
-        }
-        return $result;
-    }
-
-    /**
-     * edit the target user by id
-     */
-    public function modifyUser($uid, $data)
-    {
-        $result = new Result();
-        $t = User::where('id', $uid)->update($data);
-        $result->setCode(Result::CODE_SUCCESS)->setMsg('操作成功');
-        return $result;
-    }
-
-
-    /**
-     * Create a new user instance after a valid registration.
+     * Create a new controller instance.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @return void
      */
-    protected function create(array $data)
+    public function __construct(Request $request)
     {
-        return User::create([
-            'aaa' => '',
-            'name' => $data['name'],
-            'nick_name' => $data['nick_name'],
-            'email' => $data['email'],
-            'city_id' => $data['city_id'],
-            'password' => Hash::make($data['password']),
-        ]);
+        parent::__construct($request);
     }
+
+    /**
+     * Show the user list.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getMenuList(Request $request)
+    {
+        $data = [
+            'view_data'=>$this->_view_data,
+        ];
+        return view('manage/menulist', $data);
+    }
+
+    /**
+     * 获取某节点下一层目录树
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getMenuTree(Request $request)
+    {
+        $parent_id = $request->input('parent_id', 0);
+        $result = MenuService::CallFunc('getTreeFloor', $parent_id);
+        return response()->json($result->toArray());
+    }
+
+
+    /**
+     * create the target menu.
+     * 创建一个新节点
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createMenu(Request $request)
+    {
+        $data = Validator::make($request->all(), [
+            'item_name'  => 'required|string|max:20',
+            'short_name' => 'required|string|max:30',
+            'parent_id'  => 'required|integer|exists:menu,id',
+            'sort' => 'integer|default:0',
+            'url' => 'string|max:250|default:""',
+            'disabled' => 'boolean|default:0',
+//            'other' => 'default:""',
+        ])->validate();
+
+        $result = MenuService::CallFunc('createMenu', $data);
+        return response()->json($result->toArray());
+    }
+
+    /**
+     * modify the target menu.
+     * 修改一个节点
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function modifyMenu(Request $request)
+    {
+        $data = Validator::make($request->all(), [
+            'id'         => 'required|integer|min:1|exists:menu,id',
+            'item_name'  => 'required|string|max:20',
+            'short_name' => 'required|string|max:30',
+            'parent_id'  => 'required|integer',
+            'sort'       => 'integer|default:0',
+            'url'        => 'string|max:250|default:""',
+            'disabled'   => 'boolean|default:0',
+        ])->validate();
+
+        $result = MenuService::CallFunc('modifyMenu', $id, $data);
+        return response()->json($result->toArray());
+    }
+
+    /**
+     * delete the target menu.
+     * 创建一个新节点
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteMenu(Request $request)
+    {
+        $data = Validator::make($request->all(), [
+            'id' => 'required|integer|min:1',
+        ])->validate();
+
+        $result = MenuService::CallFunc('deleteMenu', $data['id']);
+        return response()->json($result->toArray());
+    }
+
 }
+
 

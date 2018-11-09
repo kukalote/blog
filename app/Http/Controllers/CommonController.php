@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 use App\Library\Tools;
 use App\Entity\City;
 use App\Entity\Result;
+use App\Service\Manage\MenuService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class CommonController extends Controller
 {
@@ -50,47 +51,20 @@ class CommonController extends Controller
         $path_info = $this->_request->getPathInfo();
         $path_step = explode('/', $path_info);
         $path_step_arr = ['primary_item'=>null, 'second_item'=>null, 'third_item'=>null];
-        unset($path_step[0]);
-        sort($path_step);
-        if (count($path_step) == 1) {
-            $path_step_arr['primary_item'] = $path_step[0];
-        } elseif (count($path_step) == 2) {
-            $path_step_arr['primary_item'] = $path_step[0];
-            $path_step_arr['second_item']  = $path_step[1];
+        if (count($path_step) == 2) {
+            $path_step_arr['primary_item'] = $path_step[1];
         } elseif (count($path_step) == 3) {
-            $path_step_arr['primary_item'] = $path_step[0];
-            $path_step_arr['second_item']  = $path_step[1];
-            $path_step_arr['third_item']   = $path_step[2];
+            $path_step_arr['primary_item'] = $path_step[1];
+            $path_step_arr['second_item']  = $path_step[2];
+        } elseif (count($path_step) == 4) {
+            $path_step_arr['primary_item'] = $path_step[1];
+            $path_step_arr['second_item']  = $path_step[2];
+            $path_step_arr['third_item']   = $path_step[3];
         }
+        $item_list = MenuService::getInstance()->getMenuList();
         $item_list = [
             'step' => $path_step_arr,
-            'item_list' => [
-                [
-                    'key' => 'home',
-                    'item_name'=>'item_name',
-                    'url'=>'',
-                    'item_list'=> [],
-                ],
-                [
-                    'key' => 'manage',
-                    'item_name'=>'用户管理',
-                    'url'=>'',
-                    'item_list'=> [
-                        [
-                            'key' => 'user',
-                            'item_name'=>'用户列表',
-                            'url'=>url('manage/user/list'),
-                            'item_list'=> [],
-                        ],
-                        [
-                            'key' => 'menu',
-                            'item_name'=>'菜单管理',
-                            'url'=>url('manage/menu/list'),
-                            'item_list'=> [],
-                        ],
-                    ],
-                ],
-            ],
+            'item_list' => $item_list[0]['item_list'],
         ];
         return $item_list;
     }
@@ -181,7 +155,7 @@ class CommonController extends Controller
     }
 
     /**
-     * 获取变量 
+     * 动态获取变量 
      */
     public function __get($name)
     {
@@ -231,3 +205,11 @@ class ViewData
         return $vars;
     }
 }
+
+/**
+ * 用于service 输出至 controller 返回的转换
+ */
+//class ServiceToController
+//{
+//
+//}
