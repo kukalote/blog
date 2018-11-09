@@ -325,9 +325,13 @@ $(function(){
 
     // 创建操作
     $("#createModal button[type='submit']").click(function(){
-        ajaxFormToJson(url.create, '#form_user_create', function(d){
-            $('#createModal').modal('hide');
-            setTimeout("location.reload()", 3000);
+        var btn = $(this);
+        ajaxFormToJson(url.create, '#form_user_create', {
+            submit_btn: btn,
+            successFunc: function(d){
+                $('#createModal').modal('hide');
+                setTimeout("location.reload()", 3000);
+            }
         });
         return false;
     });
@@ -339,19 +343,19 @@ $(function(){
     })
     // 删除操作
     $("#deleteModal button[type='submit']").click(function(){
-        ajaxFormToJson(url.delete, '#form_user_delete', function(d){
-            $('#deleteModal').modal('hide');
-            setTimeout("location.reload()", 3000);
+        var btn = $(this);
+        ajaxFormToJson(url.delete, '#form_user_delete', {
+            submit_btn: btn,
+            successFunc: function(d){
+                $('#deleteModal').modal('hide');
+                setTimeout("location.reload()", 3000);
+            }
         });
         return false;
     });
 
     // 编辑弹框
     $('#editModal').on('show.bs.modal', function (event) {
-//        // 还原表单信息
-//        $(this).find("input[type='text']").val('');
-//        $(this).find("select[name='city_id']").select2().val(0).trigger("change");
-
         // 自动填充表单信息
         var button = $(event.relatedTarget);
         var uid    = button.data('id');
@@ -365,9 +369,13 @@ $(function(){
 
     // 编辑操作
     $("#editModal button[type='submit']").click(function(){
-        ajaxFormToJson(url.edit, '#form_user_edit', function(d){
-            $('#editModal').modal('hide');
-            setTimeout("location.reload()", 3000);
+        var btn = $(this);
+        ajaxFormToJson(url.edit, '#form_user_edit', {
+            submit_btn: btn,
+            successFunc: function(d){
+                $('#editModal').modal('hide');
+                setTimeout("location.reload()", 3000);
+            }
         });
         return false;
     });

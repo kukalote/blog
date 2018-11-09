@@ -67,10 +67,9 @@ class UserService extends BaseService
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    public function create(array $data)
     {
         return User::create([
-            'aaa' => '',
             'name' => $data['name'],
             'nick_name' => $data['nick_name'],
             'email' => $data['email'],

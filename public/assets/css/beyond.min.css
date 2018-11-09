@@ -11791,7 +11791,7 @@ input[type=checkbox].checkbox-slider.toggle~.text:after {
 
 input[type=checkbox].checkbox-slider.yesno~.text:before {
 	font-family: 'Open Sans','Segoe UI';
-	content: "YES            NO"
+	content: "YES        NO"
 }
 
 input[type=checkbox].checkbox-slider~.text {
@@ -11801,7 +11801,7 @@ input[type=checkbox].checkbox-slider~.text {
 
 input[type=checkbox].checkbox-slider~.text:before {
 	font-family: 'Open Sans','Segoe UI';
-	content: "ON           OFF";
+	content: "ON        OFF";
 	background-color: #fff;
 	color: #999;
 	font-weight: 300;

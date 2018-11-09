@@ -50,6 +50,9 @@ class Tools
         return $response;
     }
 
+    /**
+     * 多路curl请求
+     */
     public static function multipleCurl()
     {
     }
@@ -93,6 +96,28 @@ class Tools
             }
         }
         return $redis_val;
+    }
+
+    /**
+     * 数组生成树型结构
+     */
+    public static function arrayToTree($src_array, $parent_column, $self_column, $parent_value=0, $sort_column='')
+    {
+        $tree = array();
+        foreach ($src_array as $key=>$val) {
+            if ($val[$parent_column]==$parent_value) {
+                $self_value = $val[$self_column];
+                $tree_ceil = $val;
+//                $src_array[$key] = null;
+//                unset($src_array[$key]);
+                $tree_ceil['item_list'] = self::arrayToTree($src_array,  $parent_column,  $self_column, $self_value, $sort_column);
+                $tree[] = $tree_ceil;
+            }
+        }
+        if (!empty($sort_column)) {
+            array_multisort(array_column($tree, $sort_column), SORT_ASC, SORT_NUMERIC, $tree);
+        }
+        return $tree;
     }
 
 }

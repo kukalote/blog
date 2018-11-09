@@ -12,7 +12,7 @@
                 <ul class="nav sidebar-menu">
                     <!--UI Elements-->
                     @foreach( $view_data->_item_info['item_list'] as $primary_item )
-                    @if( !empty($primary_item['key']) && $primary_item['key']==$view_data->_item_info['step']['primary_item'] )
+                    @if( !empty($primary_item['short_name']) && $primary_item['short_name']==$view_data->_item_info['step']['primary_item'] )
                         @if (empty($primary_item['item_list']))
                     <li class="active">
                         @else
@@ -31,7 +31,7 @@
                         @if( !empty( $primary_item['item_list'] ) )
                         <ul class="submenu">
                             @foreach( $primary_item['item_list'] as $second_item )
-                            @if( !empty($second_item['key']) && $second_item['key']==$view_data->_item_info['step']['second_item'] )
+                            @if( !empty($second_item['short_name']) && $second_item['short_name']==$view_data->_item_info['step']['second_item'] )
                                 @if (empty($second_item['item_list']))
                             <li class="active">
                                 @else 
@@ -53,7 +53,7 @@
                                 <ul class="submenu">
                                     @foreach( $second_item['item_list'] as $third_item )
 
-                                    @if( !empty($third_item['key']) && $third_item['key']==$view_data->_item_info['step']['third_item'] )
+                                    @if( !empty($third_item['short_name']) && $third_item['short_name']==$view_data->_item_info['step']['third_item'] )
                                     <li class="active">
                                     @else 
                                     <li>

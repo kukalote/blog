@@ -62,6 +62,10 @@ class Handler extends ExceptionHandler
             return $exception->render($request, $exception);
         }
 
+        if ($exception instanceof ModelExtraException) {
+            return $exception->render($request, $exception);
+        }
+
         // 参数验证处理
         if ($exception instanceof ValidationException) {
             $errors = $exception->errors();

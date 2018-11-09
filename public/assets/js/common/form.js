@@ -1,37 +1,138 @@
 
 // form提交方法， 提交返回提示
-// 
+/**
+ 1. 表单提交
+ 2. js模拟提交
+ 3. 统一事前调用，事后调用(提交按钮禁用，启用)
+ */
+//$.ajaxSetup({
+//     headers: {
+//         'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+//     }
+//});
+
+/**
+ * ajax form 提交
+ * events: [beforeFunc, successFunc, failFunc, afterFunc];
+ */
+function ajaxFormToJson(url, form, events) {
+    var params = $(form).serialize()
+    if (events == undefined) var events = {};
+    if (events.beforeFunc == undefined && events.submit_btn != undefined) {
+        events.beforeFunc = function(){
+            $(events.submit_btn).addClass("disabled");
+        }
+    }
+    if (events.afterFunc == undefined && events.submit_btn != undefined) {
+        events.afterFunc = function(){
+            $(events.submit_btn).removeClass("disabled");
+        }
+    }
+    ajaxToJson(url, params, events);
+}
 
 
 /**
- * ajax 提交
+ * 静音请求-成功不提示
+ * events: [beforeFunc, successFunc, failFunc, afterFunc];
  */
-function ajaxFormToJson(url, form, successFunc, failFunc) {
-    var params = $(form).serialize()
+
+function quiteAjaxToJson(url, params, events, clear_notify) {
+    if (clear_notify == undefined) {
+        var clear_notify = {
+            clearSuccess : true,
+            clearDanger : true,
+            clearError : true
+        };
+    }
+    ajaxToJson(url, params, events, clear_notify);
+}
+/**
+ * ajax 提交-返回json
+ * events: [beforeFunc, successFunc, failFunc, afterFunc];
+ * clear_notify: [clearSuccess, clearDanger, clearError];
+ */
+function ajaxToJson(url, params, events, clear_notify) {
+
+    if (clear_notify == undefined) var clear_notify = {};
+    if (events == undefined) var events = {};
+    if (events.beforeFunc != undefined) {
+        events.beforeFunc();
+    }
     $.ajax({
         type: "POST",
         dataType: "json",
         url: url, 
         data: params,
         success: function(r){
-            console.log(r); // todo
             if (r.code == 1) {
-                notifySuccess(r.msg);
-                if (successFunc != undefined && successFunc != null) {
-                    successFunc(r);
+                if (events.successFunc != undefined && events.successFunc != null) {
+                    events.successFunc(r);
+                }
+                if (clear_notify.clearSuccess != true) {
+                    notifySuccess(r.msg);
                 }
             } else {
-                notifyDanger(r.msg);
-                if (failFunc != undefined) {
-                    failFunc(r);
+                if (events.failFunc != undefined) {
+                    events.failFunc(r);
+                }
+                if (clear_notify.clearDanger != true) {
+                    notifyDanger(r.msg);
                 }
             }
+            if (events.afterFunc != undefined) {
+                events.afterFunc(r);
+            }
         },
-        error: function(){
-            notifyDanger("请求异常!");
+        error: function(r){
+            if (clear_notify.clearError != true) {
+                notifyDanger("请求异常!");
+            }
+            if (events.afterFunc != undefined) {
+                events.afterFunc(r);
+            }
         }
     });
 }
+
+/**
+ * ajax form 提交
+ */
+//function ajaxToJson(url, params, events) {
+//    if (events == undefined) var events = {};
+//    if (events.beforeFunc != undefined) {
+//        events.beforeFunc();
+//    }
+//    $.ajax({
+//        type: "POST",
+//        dataType: "json",
+//        url: url, 
+//        data: params,
+//        success: function(r){
+//            if (r.code == 1) {
+//                if (events.successFunc != undefined && events.successFunc != null) {
+//                    events.successFunc(r);
+//                }
+//                notifySuccess(r.msg);
+//            } else {
+//                if (events.failFunc != undefined) {
+//                    events.failFunc(r);
+//                }
+//                notifyDanger(r.msg);
+//            }
+//            if (events.afterFunc != undefined) {
+//                events.afterFunc();
+//            }
+//        },
+//        error: function(){
+//            notifyDanger("请求异常!");
+//            if (events.afterFunc != undefined) {
+//                events.afterFunc();
+//            }
+//        }
+//    });
+//}
+
 
 
 /*

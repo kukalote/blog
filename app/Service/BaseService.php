@@ -5,6 +5,7 @@
  */
 namespace App\Service;
 
+use App\Entity\Result;
 
 
 class BaseService
@@ -20,6 +21,24 @@ class BaseService
             static::$containers[static::class] =new static();
         }
         return static::$containers[static::class];
+    }
+
+    public static function CallFunc($func, ...$params)
+    {
+        $result = new Result();
+        try {
+            $data = call_user_func_array([self::getInstance(), $func], $params);
+            $result->setMsg('操作成功')->setCode(Result::CODE_SUCCESS)->setData($data);
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result->setMsg( $msg )->setCode( Result::CODE_ERROR );
+        }
+        return $result;
+    }
+    
+    public static function CallFuncArray($func, $params)
+    {
+        return call_user_func_array([self::getInstance(), $func], $params);
     }
 }
 
