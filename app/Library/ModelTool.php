@@ -48,6 +48,15 @@ trait ModelTool
         return (!is_null($data) && !is_null($data->first())) ? $data->toArray() : array();
     }
 
+    /**
+     * 获取分页信息
+     */
+    public static function getListPage($query, $page=null) 
+    {
+        $page = $page??config('view.per_page');
+        return self::getQuery($query)->paginate($page);
+    }
+
     public static function getQuery($query)
     {
         if (!($query instanceof Builder)) {

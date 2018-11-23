@@ -11,6 +11,9 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const NO_DELETED = 1;
+    const IS_DELETED = 2;
+
     /**
      * The connection name for the model.
      *

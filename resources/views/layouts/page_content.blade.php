@@ -2,7 +2,10 @@
     <div class="main-container container-fluid">
         <!-- Page Container -->
         <div class="page-container">
-        @include('layouts.page_sidebar')
+{{-- 框架页加载侧栏 --}}
+@if ($page_type=='frame')
+        @include('layouts.page_sidebar', ['step'=>$view_data->_item_info['step'], 'current_item'=>$view_data->_item_info['current_item'], 'item_list'=>$view_data->_item_info['item_list']])
+@endif
         @yield('page_main')
 
         </div>

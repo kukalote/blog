@@ -1,21 +1,28 @@
-@extends('layouts.appp')
+@extends('alert')
 
 @section('title', 'Page Title')
 
+
 @section('sidebar')
+*****
     @parent
-    <p>sidebar</p>
+    <p> 上层section</p>
+*****
+@endsection
+
+@section('sidebar')
+-----
+    @parent
+    <p> 中层section</p>
+-----
+@endsection
+
+@section('sidebar')
++++
+    <p> 低层section</p>
++++
 @endsection
 
 @section('content')
     <p>This is my body content.</p>
 @endsection
-
-@section('js')
-
-<script>
-
-@parent
-</script>
-@endsection
-

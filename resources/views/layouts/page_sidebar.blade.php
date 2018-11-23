@@ -8,11 +8,11 @@
                 </div>
                 <!-- /Page Sidebar Header -->
                 <!-- Sidebar Menu -->
-                @if( !empty( $view_data->_item_info ) )
+                @if( !empty( $item_list ) )
                 <ul class="nav sidebar-menu">
                     <!--UI Elements-->
-                    @foreach( $view_data->_item_info['item_list'] as $primary_item )
-                    @if( !empty($primary_item['short_name']) && $primary_item['short_name']==$view_data->_item_info['step']['primary_item'] )
+                    @foreach( $item_list as $primary_item )
+                    @if( !empty($primary_item['short_name']) && $primary_item['short_name']==$step[1] )
                         @if (empty($primary_item['item_list']))
                     <li class="active">
                         @else
@@ -21,17 +21,22 @@
                     @else
                     <li>
                     @endif
+                        @if (empty($primary_item['item_list']))
+                        <a href="{{$primary_item['url']}}" >
+                        @else
                         <a href="{{$primary_item['url']}}" class="menu-dropdown">
+                        @endif
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text"> {{$primary_item['item_name']}} </span>
                             @if( !empty( $primary_item['item_list'] ) )
                             <i class="menu-expand"></i>
                             @endif
                         </a>
-                        @if( !empty( $primary_item['item_list'] ) )
+
+                        @if(!empty( $primary_item['item_list'] ))
                         <ul class="submenu">
                             @foreach( $primary_item['item_list'] as $second_item )
-                            @if( !empty($second_item['short_name']) && $second_item['short_name']==$view_data->_item_info['step']['second_item'] )
+                            @if( !empty($second_item['short_name']) && !empty($step[2]) && $second_item['short_name']==$step[2] )
                                 @if (empty($second_item['item_list']))
                             <li class="active">
                                 @else 
@@ -40,7 +45,11 @@
                             @else 
                             <li>
                             @endif
+                                @if (empty($second_item['item_list']))
+                                <a href="{{$second_item['url']}}">
+                                @else
                                 <a href="{{$second_item['url']}}" class="menu-dropdown">
+                                @endif
                                     <span class="menu-text">
                                         {{$second_item['item_name']}}
                                     </span>
@@ -53,7 +62,7 @@
                                 <ul class="submenu">
                                     @foreach( $second_item['item_list'] as $third_item )
 
-                                    @if( !empty($third_item['short_name']) && $third_item['short_name']==$view_data->_item_info['step']['third_item'] )
+                                    @if( !empty($third_item['short_name']) && !empty($step[3]) && $third_item['short_name']==$step[3] )
                                     <li class="active">
                                     @else 
                                     <li>

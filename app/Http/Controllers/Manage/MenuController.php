@@ -65,9 +65,8 @@ class MenuController extends CommonController
             'short_name' => 'required|string|max:30',
             'parent_id'  => 'required|integer|exists:menu,id',
             'sort' => 'integer|default:0',
-            'url' => 'string|max:250|default:""',
+            'url' => 'string|max:250|default:',
             'disabled' => 'boolean|default:0',
-//            'other' => 'default:""',
         ])->validate();
 
         $result = MenuService::CallFunc('createMenu', $data);
@@ -88,11 +87,11 @@ class MenuController extends CommonController
             'short_name' => 'required|string|max:30',
             'parent_id'  => 'required|integer',
             'sort'       => 'integer|default:0',
-            'url'        => 'string|max:250|default:""',
+            'url'        => 'string|max:250|default:',
             'disabled'   => 'boolean|default:0',
         ])->validate();
 
-        $result = MenuService::CallFunc('modifyMenu', $id, $data);
+        $result = MenuService::CallFunc('modifyMenu', $data['id'], $data);
         return response()->json($result->toArray());
     }
 

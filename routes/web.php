@@ -56,4 +56,26 @@ Route::post('/manage/menu/create', 'Manage\MenuController@createmenu')->name('cr
 Route::post('/manage/menu/delete', 'Manage\MenuController@deletemenu')->name('deletemenu');
 Route::post('/manage/menu/modify', 'Manage\MenuController@modifymenu')->name('modifymenu');
 
+// 商品列表
+Route::get('/goods/list', 'Goods\GoodsController@getgoodslist')->name('getgoodslist');
+Route::post('/goods/ajaxlist', 'Goods\GoodsController@ajaxgoodslist')->name('ajaxgoodslist');
+Route::get('/goods/createpage', 'Goods\GoodsController@creategoodspage')->name('creategoodspage');
+Route::post('/goods/create', 'Goods\GoodsController@creategoods')->name('creategoods');
+Route::get('/goods/modifypage', 'Goods\GoodsController@modifygoodspage')->name('modifygoodspage');
+Route::post('/goods/modify', 'Goods\GoodsController@modifygoods')->name('modifygoods');
+Route::post('/goods/delete', 'Goods\GoodsController@deletegoods')->name('deletegoods');
+
+// 商品分类
+Route::get('/goods/category', 'Goods\GoodsCategoryController@getcategorylist')->name('getcategorylist');
+Route::post('/goods/ajaxcategorylist', 'Goods\GoodsCategoryController@ajaxcategorylist')->name('ajaxcategorylist');
+Route::post('/goods/createcategory', 'Goods\GoodsCategoryController@createcategory')->name('createcategory');
+Route::post('/goods/modifycategory', 'Goods\GoodsCategoryController@modifycategory')->name('modifycategory');
+Route::post('/goods/deletecategory', 'Goods\GoodsCategoryController@deletecategory')->name('deletecategory');
+
+// 活动中心
+Route::get('/activity/list', 'activityController@getactivitylist')->name('getactivitylist');
+
+// 客户管理
+Route::get('/customer/list', 'customerController@getcustomerlist')->name('getcustomerlist');
+
 

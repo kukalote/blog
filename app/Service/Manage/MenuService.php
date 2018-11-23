@@ -98,6 +98,57 @@ class MenuService extends BaseService
         return $data;
     }
 
+    /**
+     * 获取当前所在节点信息
+     * @author xunyalong
+     * @param  array	$item_list 所有节点数组 
+     * @param  array	$path_step_arr   当前节点key
+     * @return array
+     */
+    public function getCurrentItemArr($item_list, $path_step_arr)
+    {
+        $next_item_list = $sub_item_list = array();
+        $current_item = array_shift($path_step_arr);
+
+        foreach ($item_list as $item) {
+            if ($item['short_name']==$current_item) {
+                $sub_item_list = $item['item_list'];
+                unset($item['item_list']);
+                if (!empty($sub_item_list)) {
+                    $next_item_list = $this->getCurrentItemArr($sub_item_list, $path_step_arr);
+                }
+                array_unshift($next_item_list, $item);
+                break;
+            }
+        }
+        return $next_item_list;
+    }
+
+    /**
+     * 获取当前所在节点信息
+     * @author xunyalong
+     * @param  array	$item_list 所有节点数组 
+     * @param  array	$path_step_arr   当前节点key
+     * @return array
+     */
+    public function getCurrentItemTree($item_list, $path_step_arr)
+    {
+        $current_item_list = $sub_item_list = array();
+        $current_item = array_shift($path_step_arr);
+
+        foreach ($item_list as $item) {
+            if ($item['short_name']==$current_item) {
+                $current_item_list = $item;
+                if (!empty($item['item_list'])) {
+                    $sub_item_list = $this->getCurrentItemTree($item['item_list'], $path_step_arr);
+                }
+                $current_item_list['item_list'] = $sub_item_list;
+                break;
+            }
+        }
+        return $current_item_list;
+    }
+
 
 /**********************************************************************
 *                                工具方法                                *
@@ -118,8 +169,6 @@ class MenuService extends BaseService
         return Menu::where('parent_id', $parent_id)
             ->count();
     }
-
-
 
     /**
      * 获取可用菜单列表

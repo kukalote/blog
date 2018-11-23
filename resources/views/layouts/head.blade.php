@@ -24,6 +24,15 @@
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="{{url('/assets/js/skins.min.js')}}"></script>
-
+@php
+    $page_type = $page_type??'frame';
+@endphp
+@if ($page_type=='single')
+<style>
+.page-content {
+    margin-left: 0;
+}
+</style>
+@endif
 </head>
 

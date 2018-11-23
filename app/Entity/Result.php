@@ -9,6 +9,7 @@ class Result
     const CODE_ERROR = -1;
 
     private $_data = array();
+    private $_result = null;
 
     public function __construct($code=null, $msg=null, $data=null)
     {
@@ -38,6 +39,29 @@ class Result
         return $this;
     }
 
+    public function error($callback_func, $code=null)
+    {
+        $code = $code??self::CODE_SUCCESS;
+        if ($this->getCode() != $code) {
+            $this->_result = call_user_func($callback_func, $this);
+        }
+        return $this;
+    }
+
+    public function success($callback_func, $code=null)
+    {
+        $code = $code??self::CODE_SUCCESS;
+        if ($this->getCode() == $code) {
+            $this->_result = call_user_func($callback_func, $this);
+        }
+        return $this;
+    }
+
+    public function getResponse()
+    {
+        return $this->_result??null;
+    }
+
 
     public function getCode()
     {
@@ -47,6 +71,7 @@ class Result
     {
         return $this->_data['msg'];
     }
+
     public function getMsg()
     {
         return $this->_data['msg'];
@@ -61,14 +86,8 @@ class Result
         return $this->_data;
     }
 
-
     public function toJson()
     {
         return json_encode($this->toArray());
     }
-
-
-
-    
-
 }

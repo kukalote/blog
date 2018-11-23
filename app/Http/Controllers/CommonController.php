@@ -6,7 +6,9 @@ use Auth;
 use App\Library\Tools;
 use App\Entity\City;
 use App\Entity\Result;
+use App\Entity\User;
 use App\Service\Manage\MenuService;
+use App\Service\Manage\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
@@ -18,6 +20,7 @@ class CommonController extends Controller
     const LIBRARY_RELATE_CITY_CACHE = 'lrcc';   // 数据库-城市关系及缓存
 
     private $_data = array();
+    protected $view_data = array();
 
     /**
      * Create a new controller instance.
@@ -28,6 +31,17 @@ class CommonController extends Controller
     {
         $this->_request = $request;
         $this->middleware('auth');
+        $this->view_data = ['view_data'=>$this->_view_data];
+    }
+
+    /**
+     * 设置详情页二级标题与简称
+     */
+    protected function setDetail($sets)
+    {
+        $items = $this->_view_data->_item_info;
+        array_push($items['current_item'], $sets);
+        $this->_view_data->_item_info = $items;
     }
 
     /**
@@ -44,27 +58,34 @@ class CommonController extends Controller
     }
 
     /**
-     * 获取菜单信息
+     * 获取管理员列表
+     */
+    protected function getManagerList()
+    {
+        $fields = ['id', 'name', 'nick_name'];
+        $where  = [['deleted', User::NO_DELETED]];
+        $manager_list = UserService::getInstance()->getUserList($fields, $where);
+        return array_column($manager_list, null, 'id');
+    }
+
+    /**
+     * 获取菜单信息-最高支持三级菜单
      */
     protected function getItemInfo()
     {
         $path_info = $this->_request->getPathInfo();
-        $path_step = explode('/', $path_info);
-        $path_step_arr = ['primary_item'=>null, 'second_item'=>null, 'third_item'=>null];
-        if (count($path_step) == 2) {
-            $path_step_arr['primary_item'] = $path_step[1];
-        } elseif (count($path_step) == 3) {
-            $path_step_arr['primary_item'] = $path_step[1];
-            $path_step_arr['second_item']  = $path_step[2];
-        } elseif (count($path_step) == 4) {
-            $path_step_arr['primary_item'] = $path_step[1];
-            $path_step_arr['second_item']  = $path_step[2];
-            $path_step_arr['third_item']   = $path_step[3];
-        }
+        $path_step_arr = explode('/', $path_info);
+        unset($path_step_arr[0]);
+        
         $item_list = MenuService::getInstance()->getMenuList();
+        $root_item_list = !empty($item_list[0]['item_list'])?($item_list[0]['item_list']):array();
+
+        $current_item = MenuService::getInstance()->getCurrentItemArr($root_item_list, $path_step_arr);
+
         $item_list = [
             'step' => $path_step_arr,
-            'item_list' => $item_list[0]['item_list'],
+            'current_item' => $current_item,
+            'item_list' => $root_item_list,
         ];
         return $item_list;
     }
@@ -93,13 +114,16 @@ class CommonController extends Controller
 
 
     /**
-     * 获取日期信息
+     * 获取当前页面SEO信息
      */
     protected function getHead()
     {
+        $item_list = $this->_view_data->_item_info['current_item'];
+        $last_item = array_pop($item_list);
         return [
-            'title' => '管理后台',
-            'description' => '管理后台描述',
+            'title' => $last_item['item_name'],
+            'subtitle' => $last_item['item_name'],
+            'description' => $last_item['item_name'],
             'logo' => url('/assets/img/favicon.png'),
         ];
     }
@@ -197,6 +221,7 @@ class ViewData
         try {
             $vars = $this->_obj->$name;
         } catch (\Exception $e) {
+            throw $e;
             $vars = null;
         }
         if (!empty($vars)) {

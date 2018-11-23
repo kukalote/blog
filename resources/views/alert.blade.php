@@ -1,6 +1,12 @@
-<!-- /resources/views/alert.blade.php -->
+<html>
+    <head>
+        <title>App Name - @yield('title')</title>
+    </head>
+    <body>
 
-<div class="alert alert-danger">
-    <div class="alert-title">{{ $title }}</div>
-    {{ $slot }}
-</div>
+            @yield('sidebar')
+        <div class="container">
+            @yield('content')
+        </div>
+    </body>
+</html>

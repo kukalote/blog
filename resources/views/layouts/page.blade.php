@@ -3,6 +3,6 @@
 @section('logo', $view_data->_head['logo'])
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-@include('layouts.head')
-@include('layouts.page_body')
+@include('layouts.head', ['page_type'=>$page_type??'frame'])
+@include('layouts.page_body', ['page_type'=>$page_type??'frame'])
 </html>

@@ -16,10 +16,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService extends BaseService
 {
-    public function getUserList()
+    public function getUserPage()
     {
-        $users = User::paginate(config('view.per_page'));
+        $users = User::where('deleted', User::NO_DELETED)->paginate(config('view.per_page'));
         return $users;
+    }
+
+    /**
+     * 获取全部用户
+     */
+    public function getUserList($fields, $where)
+    {
+        $query = User::where($where)->select($fields);
+        return User::getListArr($query);
     }
 
     /**
@@ -42,7 +51,8 @@ class UserService extends BaseService
     public function deleteUser($uid)
     {
         $result = new Result();
-        $effect_rows = User::where('id', $uid)->delete();
+//        $effect_rows = User::where('id', $uid)->delete();
+        $effect_rows = $this->modifyUser($uid, ['deleted'=>User::IS_DELETED]);
         if ($effect_rows) {
             $result->setCode(Result::CODE_SUCCESS)->setMsg('操作成功');
         }

@@ -120,5 +120,34 @@ class Tools
         return $tree;
     }
 
+    /**
+     * 树型吐出数据
+     * 例 : $tree_arr = [
+     *  'name' => 'xxx',
+     *  'list' => [
+     *      'name' => 'yyy',
+     *      'list' => [
+     *          'name' => 'zzz',
+     *          'list' => [],
+     *      ]
+     *  ],
+     * ]
+     * => $new_tree = popTreeArr($tree_arr, 'list');
+     * 
+     * $new_tree = [
+     *  'name' => 'yyy',
+     *  'list' => [
+     *      'name' => 'zzz',
+     *      'list' => []
+     *  ]
+     * ];
+     */
+    public static function popTreeArray(&$tree_arr, $key)
+    {
+        $current_item = $tree_arr;
+        $tree_arr = isset($tree_arr[$key])?$tree_arr[$key]:array();
+        return $current_item;
+    }
+
 }
 

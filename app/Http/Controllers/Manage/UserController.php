@@ -33,7 +33,7 @@ class UserController extends CommonController
      */
     public function getUserList(Request $request)
     {
-        $users = UserService::getInstance()->getUserList();
+        $users = UserService::getInstance()->getUserPage();
         $data = [
             'view_data'=>$this->_view_data,
             'users' => $users,

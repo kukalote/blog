@@ -3,39 +3,7 @@
 @section('page_main')
             <!-- Page Content -->
             <div class="page-content">
-                <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs">
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="fa fa-home"></i>
-                            <a href="#">Home</a>
-                        </li>
-                        <li class="active">Dashboard</li>
-                    </ul>
-                </div>
-                <!-- /Page Breadcrumb -->
-                <!-- Page Header -->
-                <div class="page-header position-relative">
-                    <div class="header-title">
-                        <h1>
-                            Dashboard
-                        </h1>
-                    </div>
-                    <!--Header Buttons-->
-                    <div class="header-buttons">
-                        <a class="sidebar-toggler" href="#">
-                            <i class="fa fa-arrows-h"></i>
-                        </a>
-                        <a class="refresh" id="refresh-toggler" href="default.htm">
-                            <i class="glyphicon glyphicon-refresh"></i>
-                        </a>
-                        <a class="fullscreen" id="fullscreen-toggler" href="#">
-                            <i class="glyphicon glyphicon-fullscreen"></i>
-                        </a>
-                    </div>
-                    <!--Header Buttons End-->
-                </div>
-                <!-- /Page Header -->
+                @parent
                 <!-- Page Body -->
                 <div class="page-body">
                     <div class="row">
@@ -109,6 +77,10 @@
                                                 <input name="parent_id" type="text" class="form-control" id="parent_id" placeholder="父级ID">
                                             </div>
                                             <div class="form-group">
+                                                <label for="logo"> 菜单图标 </label>
+                                                <input name="logo" type="text" class="form-control" id="logo" placeholder="菜单图标">
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="sort"> 排序 </label>
                                                 <input name="sort" type="text" class="form-control" id="sort" placeholder="排序-大值靠前">
                                             </div>
@@ -156,7 +128,7 @@ var url = {
     tree:   "{{url('/manage/menu/tree')}}",
     create: "{{url('/manage/menu/create')}}",
     delete: "{{url('/manage/menu/delete')}}",
-    modify:   "{{url('/manage/menu/modify')}}"
+    modify: "{{url('/manage/menu/modify')}}"
 };
 
 // 插件初始化
@@ -300,3 +272,4 @@ jQuery(document).ready(function () {
 </script>
     <!-- self_js end -->
 @endsection
+@extends('layouts.page_callback')

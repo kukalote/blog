@@ -17,20 +17,24 @@
  */
 function ajaxFormToJson(url, form, events) {
     var params = $(form).serialize()
-    if (events == undefined) var events = {};
-    if (events.beforeFunc == undefined && events.submit_btn != undefined) {
-        events.beforeFunc = function(){
-            $(events.submit_btn).addClass("disabled");
-        }
-    }
-    if (events.afterFunc == undefined && events.submit_btn != undefined) {
-        events.afterFunc = function(){
-            $(events.submit_btn).removeClass("disabled");
-        }
-    }
+    var events = getEventSets(events);
     ajaxToJson(url, params, events);
+    return false;
 }
 
+function quiteAjaxFormToJson(url, form, events, clear_notify) {
+    if (clear_notify == undefined) {
+        var clear_notify = {
+            clearSuccess : true,
+            clearDanger : true,
+            clearError : true
+        };
+    }
+    var params = $(form).serialize()
+    var events = getEventSets(events);
+    ajaxToJson(url, params, events, clear_notify);
+    return false;
+}
 
 /**
  * 静音请求-成功不提示
@@ -45,7 +49,24 @@ function quiteAjaxToJson(url, params, events, clear_notify) {
             clearError : true
         };
     }
+    var events = getEventSets(events);
     ajaxToJson(url, params, events, clear_notify);
+    return false;
+}
+
+function getEventSets(events) {
+    if (events == undefined) var events = {};
+    if (events.beforeFunc == undefined && events.submit_btn != undefined) {
+        events.beforeFunc = function(){
+            $(events.submit_btn).addClass("disabled");
+        }
+    }
+    if (events.afterFunc == undefined && events.submit_btn != undefined) {
+        events.afterFunc = function(){
+            $(events.submit_btn).removeClass("disabled");
+        }
+    }
+    return events;
 }
 /**
  * ajax 提交-返回json
@@ -93,46 +114,8 @@ function ajaxToJson(url, params, events, clear_notify) {
             }
         }
     });
+    return false;
 }
-
-/**
- * ajax form 提交
- */
-//function ajaxToJson(url, params, events) {
-//    if (events == undefined) var events = {};
-//    if (events.beforeFunc != undefined) {
-//        events.beforeFunc();
-//    }
-//    $.ajax({
-//        type: "POST",
-//        dataType: "json",
-//        url: url, 
-//        data: params,
-//        success: function(r){
-//            if (r.code == 1) {
-//                if (events.successFunc != undefined && events.successFunc != null) {
-//                    events.successFunc(r);
-//                }
-//                notifySuccess(r.msg);
-//            } else {
-//                if (events.failFunc != undefined) {
-//                    events.failFunc(r);
-//                }
-//                notifyDanger(r.msg);
-//            }
-//            if (events.afterFunc != undefined) {
-//                events.afterFunc();
-//            }
-//        },
-//        error: function(){
-//            notifyDanger("请求异常!");
-//            if (events.afterFunc != undefined) {
-//                events.afterFunc();
-//            }
-//        }
-//    });
-//}
-
 
 
 /*
